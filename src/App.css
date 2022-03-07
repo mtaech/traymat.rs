@@ -53,6 +53,27 @@ div.inline-logo .smaller {
   }
 }
 
+.bing-pic-box{
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .bing-pic{
-  width: 85%;
+  width: 95%;
+  border-radius: 12px;
+}
+.bing-pic-title{
+  position: absolute;
+  left: 10%;
+  bottom: 5px;
+  box-sizing: border-box;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+  line-height: 1;
+  border-radius: 0 0 16px 16px;
+}
+
+.bing-pic-btn{
+  margin: 10px 0 10px 0 !important;
 }

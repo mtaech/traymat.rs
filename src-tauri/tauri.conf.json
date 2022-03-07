@@ -1,6 +1,6 @@
 {
   "package": {
-    "productName": "traymat.rs",
+    "productName": "trayMat.rs",
     "version": "0.1.0"
   },
   "build": {
@@ -13,7 +13,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "me.mtaech.trayMat",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -55,8 +55,8 @@
     "windows": [
       {
         "title": "TrayMat",
-        "width": 800,
-        "height": 600,
+        "width": 700,
+        "height": 420,
         "resizable": true,
         "fullscreen": false
       }
