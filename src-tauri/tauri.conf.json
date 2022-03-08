@@ -1,6 +1,6 @@
 {
   "package": {
-    "productName": "trayMat.rs",
+    "productName": "TrayMat",
     "version": "0.1.0"
   },
   "build": {
@@ -24,7 +24,7 @@
       "resources": [],
       "externalBin": [],
       "copyright": "",
-      "category": "DeveloperTool",
+      "category": "WallpaperTool",
       "shortDescription": "",
       "longDescription": "",
       "deb": {
