@@ -1,4 +1,4 @@
-import '../App.css'
+import './App.css'
 
 function PicTitle(props:{title: string | undefined}) {
     const title = props.title;
@@ -11,7 +11,7 @@ function PicTitle(props:{title: string | undefined}) {
     }
 }
 
-function BingPic(props: { url: string | undefined; title: string | undefined; }) {
+function WallpaperPic(props: { url: string | undefined; title: string | undefined; }) {
     return(
        <div className="bing-pic-box">
            <img className="bing-pic" src={props.url} alt={props.title}/>
@@ -20,4 +20,4 @@ function BingPic(props: { url: string | undefined; title: string | undefined; })
     )
 }
 
-export default BingPic
+export default WallpaperPic

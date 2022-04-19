@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {invoke} from "@tauri-apps/api";
-import BingPic from "./bing-pic";
 import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import {A11y, Grid, Navigation, Pagination, Scrollbar} from "swiper";
-import {Alert, Box, Button, CircularProgress, LinearProgress, Snackbar} from "@mui/material";
+import {Alert, Button, Snackbar} from "@mui/material";
+import WallpaperPic from "./WallpaperPic";
 
 
 interface ImageInfo {
@@ -24,7 +24,7 @@ interface ResultApi {
 
 const bingDomain = "https://cn.bing.com/";
 
-function BingSwiper() {
+function WallpaperSwiper() {
     const [imageArr,setImageArr] = useState<ImageInfo[]>();
     const [imageInfo,setImageInfo] = useState({url:"",title:"",startdate:""});
     const [success,setSuccess] = useState(false);
@@ -48,7 +48,7 @@ function BingSwiper() {
         setBtnStatus(true)
         invoke<ResultApi>("set_wallpaper",{"url":imageInfo.url,"title":imageInfo.title,"date":imageInfo.startdate}).then((rst)=>{
             setMsg(rst.msg)
-            if ("success" == rst.data){
+            if ("success" === rst.data){
                 setSuccess(true)
             }else {
                 setError(true)
@@ -91,7 +91,7 @@ function BingSwiper() {
                 {
                     imageArr?.map((image)=>
                         <SwiperSlide key={image.url}>
-                            <BingPic url={bingDomain+image.url} title={image.title} key={image.url}/>
+                            <WallpaperPic url={bingDomain+image.url} title={image.title} key={image.url}/>
                         </SwiperSlide>
                     )
                 }
@@ -120,4 +120,4 @@ function BingSwiper() {
 
 }
 
-export default BingSwiper
+export default WallpaperSwiper

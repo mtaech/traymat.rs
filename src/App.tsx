@@ -1,11 +1,11 @@
 import React from 'react'
 import './App.css'
-import BingSwiper from "./bing_wallpaper/bing-swiper";
+import WallpaperSwiper from "./WallpaperSwiper";
 
 function App() {
   return (
     <div className="App">
-        <BingSwiper/>
+        <WallpaperSwiper/>
     </div>
   )
 }
