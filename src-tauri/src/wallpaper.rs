@@ -4,6 +4,7 @@ use std::fs::File;
 use std::io::Write;
 use std::ops::Add;
 use std::path::Path;
+use log::{error, warn};
 use serde::{Serialize, Deserialize};
 
 
@@ -40,6 +41,7 @@ pub fn get_bing_list() -> Result<Vec<ImageInfo>,String>{
     let bing_api = "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=us_EN";
     let resp =  reqwest::blocking::get(bing_api).expect("get resp error" );
     let bing_info:BingInfo = resp.json().expect("Deserialize json error");
+    warn!("bing_list:{:?}",bing_info);
     Ok(bing_info.images)
 }
 
@@ -50,7 +52,8 @@ pub fn set_wallpaper(url:&str,title:&str,date:&str) -> Result<ResultApi,String>{
             wallpaper::set_from_path(&*path).expect("set paper failed");
             ResultApi::new("200".to_string(),"设置成功！".to_string(),"success".to_string())
         }
-        Err(_) => {
+        Err(error) => {
+            error!("set wallpaer error {:#?}",error);
             ResultApi::new("500".to_string(),"设置失败！".to_string(),"error".to_string())
         }
     };
@@ -60,7 +63,8 @@ pub fn set_wallpaper(url:&str,title:&str,date:&str) -> Result<ResultApi,String>{
 
 pub fn download_image(url:&str,title:&str,date:&str) -> Result<String,Box<dyn Error>> {
     let home_path = env::var("HOME")?;
-    let path = Path::new(&home_path).join("Pictures").join(date.to_owned()+"-"+title+".jpg");
+    let path = Path::new(&home_path).join("Pictures").join("Wallpaper")
+        .join(date.to_owned()+"-"+title+".jpg");
     let string = String::from(path.to_str().unwrap());
     if !path.exists() {
         let bing_domain = "https://www.bing.com".to_string();

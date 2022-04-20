@@ -7,7 +7,7 @@ license = ""
 repository = ""
 default-run = "app"
 edition = "2021"
-rust-version = "1.57"
+rust-version = "1.60"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -20,6 +20,7 @@ serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0.0-rc.3", features = ["api-all"] }
 reqwest = {version = "0.11.9", features = ["json","blocking"] }
 wallpaper = "3.2.0"
+chrono = "0.4.19"
 log = "0.4.14"
 fern = "0.6.0"
 
