@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::Write;
 use std::ops::Add;
 use std::path::Path;
-use log::{error, warn};
+use log::{error, info, warn};
 use serde::{Serialize, Deserialize};
 
 
@@ -37,11 +37,27 @@ impl ResultApi {
 }
 
 #[tauri::command]
-pub fn get_bing_list() -> Result<Vec<ImageInfo>,String>{
+pub async fn get_bing_list() -> Result<Vec<ImageInfo>,String>{
     let bing_api = "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=us_EN";
-    let resp =  reqwest::blocking::get(bing_api).expect("get resp error" );
-    let bing_info:BingInfo = resp.json().expect("Deserialize json error");
-    warn!("bing_list:{:?}",bing_info);
+    let resp =  reqwest::get(bing_api).await;
+    let bing_info:BingInfo = match resp {
+        Ok(info) => {
+            match info.json::<BingInfo>().await {
+                Ok(info) => {
+                    info
+                }
+                Err(error) => {
+                    log::error!("get images info error reason:{:?}",error);
+                    panic!()
+                }
+            }
+        }
+        Err(error) => {
+            log::error!("get images info error reason:{:?}",error);
+            panic!()
+        }
+    };
+    info!("bing_list:{:?}",bing_info);
     Ok(bing_info.images)
 }
 
@@ -53,7 +69,7 @@ pub fn set_wallpaper(url:&str,title:&str,date:&str) -> Result<ResultApi,String>{
             ResultApi::new("200".to_string(),"设置成功！".to_string(),"success".to_string())
         }
         Err(error) => {
-            error!("set wallpaer error {:#?}",error);
+            error!("set wallpaer error {:?}",error);
             ResultApi::new("500".to_string(),"设置失败！".to_string(),"error".to_string())
         }
     };

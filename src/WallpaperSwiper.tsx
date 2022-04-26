@@ -53,6 +53,7 @@ function WallpaperSwiper() {
             }else {
                 setError(true)
             }
+            setBtnStatus(false)
         })
         setBtnStatus(false)
 
