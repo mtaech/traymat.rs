@@ -1,5 +1,5 @@
-use std::fs;
-use std::path::Path;
+use std::{env, fs};
+use std::path::{Path, PathBuf};
 use log::{debug, error, info, trace, warn};
 
 
@@ -23,11 +23,17 @@ pub fn setup_logger() -> Result<(), fern::InitError> {
 }
  
 pub fn get_log_path() -> String{
-    let home = env!("HOME");
-    let wave_path = Path::new(home).join(".wave");
-    let path = wave_path.join("wave.log").into_os_string().into_string().unwrap();
-    if !wave_path.exists() {
-        fs::create_dir_all(wave_path).unwrap();
-    }
-    path
+    match home::home_dir() {
+        None => {
+            panic!("cant find home --")
+        }
+        Some(home) => {
+            let wave_path = home.join(".traymat");
+            let path = wave_path.join("traymat.log").into_os_string().into_string().unwrap();
+            if !wave_path.exists() {
+                fs::create_dir_all(wave_path).unwrap();
+            }
+            return  path
+        }
+    };
 }

@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, fs};
 use std::error::Error;
 use std::fs::File;
 use std::io::Write;
@@ -79,8 +79,16 @@ pub fn set_wallpaper(url:&str,title:&str,date:&str) -> Result<ResultApi,String>{
 
 pub fn download_image(url:&str,title:&str,date:&str) -> Result<String,Box<dyn Error>> {
     let home_path = env::var("HOME")?;
-    let path = Path::new(&home_path).join("Pictures").join("Wallpaper")
-        .join(date.to_owned()+"-"+title+".jpg");
+    let wallpaper_dir = Path::new(&home_path).join("Pictures").join("Wallpaper");
+    if !wallpaper_dir.exists() {
+        match fs::create_dir_all(&wallpaper_dir) {
+            Ok(_) => {}
+            Err(_) => {
+                panic!("create wallpaper dir error!")
+            }
+        }
+    }
+    let path = wallpaper_dir.join(date.to_owned() + "-" + title + ".jpg");
     let string = String::from(path.to_str().unwrap());
     if !path.exists() {
         let bing_domain = "https://www.bing.com".to_string();
